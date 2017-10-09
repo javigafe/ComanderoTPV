@@ -1,0 +1,45 @@
+.anchoFull {
+    width: 100%;
+}
+
+.h-scrollable {
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.element-scrollable{
+    display: inline-block;
+    float: none; /* Very important */
+}
+
+.separacion {
+    padding-bottom: 2ch;
+}
+
+.textColorRed{
+    color: red;
+}
+
+.textColorVerde{
+    color: #C5E1A5;
+}
+
+.textColorAmarillo{
+    color: #FFF59D;
+}
+
+.textColorRojo{
+    color: #EF9A9A;
+}
+
+.colorWindowsVerde{
+    background-color: #C5E1A5;
+}
+
+.colorWindowsRojo{
+    background-color: #EF9A9A;
+}
+
+.colorWindowsAmarillo{
+    background-color: #FFF59D;
+}

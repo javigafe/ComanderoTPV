@@ -1,0 +1,36 @@
+<div>
+    <div align="center" *ngIf="loading && (userProfieActiu === null)">
+        <br>
+        <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+        <br>
+    </div>
+    <fieldset class="form-group" *ngIf="!loading">
+        <label>{{'user' | translate}}:</label>
+        <select class="form-control" [(ngModel)]="usuarioActiu" (click)="getDataUser()" >
+            <option *ngFor="let user of usuaris" [ngValue]=user>{{user.username}}</option>
+        </select>
+        <div *ngIf="usuarioActiu !== null">
+            <br>
+            <label>{{'name' | translate}}:</label>
+            <input class="form-control" placeholder="{{'enter_full_name' | translate}}" [(ngModel)]="nombre" >
+            <br>
+            <label>{{'dni_simple' | translate}}:</label>
+            <input class="form-control" placeholder="{{'enter_dni_simple' | translate}}" [(ngModel)]="dni" >
+            <br>
+            <label>{{'position' | translate}}:</label>
+            <select class="form-control" [(ngModel)]="carec">
+                <option [ngValue]=1>{{'encaregat' | translate}}</option>
+                <option [ngValue]=2>{{'responsable' | translate}}</option>
+                <option [ngValue]=3>{{'user' | translate}}</option>
+            </select>
+            <br>
+            <div align="center">
+                <button (click)="editTrabajador()" class="btn btn-secondary colorAdd"><i class="fa fa-pencil-square-o"></i> {{ 'edit' | translate }}</button>
+            </div>
+        </div>
+        <div>
+            <p class="colorTextRed">{{errorText}}</p>
+            <p class="colorTextGreen">{{succes}}</p>
+        </div>
+    </fieldset>
+</div>

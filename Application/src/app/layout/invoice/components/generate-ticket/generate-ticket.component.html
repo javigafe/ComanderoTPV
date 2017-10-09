@@ -1,0 +1,123 @@
+<!-- loading -->
+<div align="center" *ngIf="loadingTaulas || loadingFactura || loadingConsumibles || loadingTiquet || loadingClinets">
+    <br>
+    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+    <br>
+</div>
+
+<!-- seleccio taula -->
+<div *ngIf="(!loadingTaulas) && (taulaActiva===null)">
+    <div>
+        <p>{{ 'select_taula_invoices' | translate }}</p>
+    </div>
+    <div class="row">
+        <div class="col-6 col-sm-3 col-md-2 text-xs-center" *ngFor="let taula of taulas">
+            <div class="card card-default colorWindowsGris" (click)="seleccioTaula(taula)">
+                <div class="card-block" align="center">
+                    {{taula.numTaula}}
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<div class="row" *ngIf="(taulaActiva!==null) && (!loadingConsumibles) && (!loadingFactura) && (!loadingTiquet) && (!loadingClinets)">
+    <!-- Part Central -->
+    <div class="col-md-9 col-sm-8">
+        <div>
+            <div>
+                <div class="form-group input-group">
+                    <h4><i class="fa fa-search"></i> {{ 'search' | translate }}:&nbsp;</h4>
+                    <input class="form-control" placeholder="{{ 'search_client' | translate }}" [(ngModel)]="searchClient" (keyup)="findClient()">
+                    <span class="input-group-btn"><button class="btn btn-secondary" type="button" (click)="clineFind()">{{ 'cline' | translate }}</button></span>
+                </div>
+                <label>{{ 'select_client_invoice' | translate }}:</label>
+                <select class="form-control" [(ngModel)]="ClinetActiu">
+                    <option [ngValue]=null></option>
+                    <option *ngFor="let client of clients" [ngValue]="client">{{client.NIF_DNI}} - {{client.nom}}</option>
+                </select>
+                <hr />
+            </div>
+        </div>
+
+        <div id="print-section">
+            <div align="center">
+                {{fechaTemp | date:'short' }}
+                <hr>
+            </div>
+            <div *ngIf="ClinetActiu != null" align="center">
+                <p>{{ 'client' | translate }}: {{ClinetActiu.nom}}<br>{{ 'address_client' | translate }}: {{ClinetActiu.direccio}}<br>{{ 'dni_client' | translate }}: {{ClinetActiu.NIF_DNI}}</p>
+                <hr>
+            </div>
+            <table class="table table-striped anchoFull">
+                <thead>
+                <tr>
+                    <th class="anchoQuantitat">{{ 'amount' | translate }}</th>
+                    <th class="anchoFull">{{ 'product' | translate }}</th>
+                    <th class="anchoQuantitat">{{ 'price' | translate }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let lineaServer of lineasTiquet">
+                    <td>{{lineaServer.quantitat}}</td>
+                    <td>{{lineaServer.nomConsumible}}</td>
+                    <td align="right">{{((lineaServer.preuActual * ((lineaServer.ivaActual/100) + 1 )) * lineaServer.quantitat).toFixed(2) }}</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <hr>
+            <div class="totalPosition">
+                <div align="right">{{ 'total_taxes' | translate }}: {{totalImpostos.toFixed(2)}}€</div>
+                <div align="right"><b>{{ 'total' | translate }}: {{total.toFixed(2)}}€</b></div>
+            </div>
+            <hr>
+
+            <table class="table table-striped anchoFull">
+                <thead>
+                <tr align="right">
+                    <th class="ancho25">{{ 'taxes' | translate }}</th>
+                    <th class="ancho25">{{ 'base' | translate }}</th>
+                    <th class="ancho25">{{ 'quota' | translate }}</th>
+                    <th class="ancho25">{{ 'total' | translate }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let ivaLine of ivas" align="right">
+                    <td>{{ivaLine.iva}}%</td>
+                    <td>{{ivaLine.base.toFixed(2)}}€</td>
+                    <td>{{ivaLine.cuota.toFixed(2)}}€</td>
+                    <td>{{ivaLine.total.toFixed(2)}}€</td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
+
+        </div>
+
+
+    </div>
+
+    <!-- menu lateral -->
+    <div class="col-md-3 col-sm-4" >
+        <div align="center">
+            <button (click)="print()" class="btn btn-secondary anchoFull buttonMargin"><i class="fa fa-fw fa-print fa-5x"></i><br>{{ 'print_invoice' | translate }}</button>
+            <button (click)="pagat()" class="btn btn-secondary anchoFull buttonMargin"><i class="fa fa-check fa-5x" aria-hidden="true"></i><br>{{ 'paid' | translate }}</button>
+            <label>{{ 'payment_type' | translate }}:</label>
+            <select class="form-control" [(ngModel)]="tipusPagament">
+                <option [ngValue]=1>{{ 'cash' | translate }}</option>
+                <option [ngValue]=2>{{ 'card' | translate }}</option>
+                <option [ngValue]=3>{{ 'ticket_restaurant' | translate }}</option>
+                <option [ngValue]=4>{{ 'others' | translate }}</option>
+            </select>
+        </div>
+    </div>
+
+</div>

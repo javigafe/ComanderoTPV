@@ -1,0 +1,79 @@
+<div>
+    <fieldset class="form-group">
+        <label>{{'user' | translate}}:</label>
+        <input class="form-control" placeholder="{{'add_user' | translate}}" [(ngModel)]="usuario" (keyup)="checkDisponible()">
+        <br>
+        <div align="center">
+            <span *ngIf="disponibilitatUser === 0" class="colorTextGreen"><i class="fa fa-check"></i> {{'user_ok' | translate}}</span>
+            <span *ngIf="disponibilitatUser > 0" class="colorTextRed"><i class="fa fa-times"></i> {{'user_bad' | translate}}</span>
+        </div>
+        <label>{{'password' | translate}}:</label>
+        <input type="password" class="form-control" placeholder="{{'enter_password' | translate}}" [(ngModel)]="pass1" >
+        <br>
+        <label>{{'re_password' | translate}}:</label>
+        <input type="password" class="form-control" placeholder="Repite la contraseña" [(ngModel)]="pass2" >
+        <br>
+        <label>{{'name' | translate}}:</label>
+        <input class="form-control" placeholder="{{'enter_full_name' | translate}}" [(ngModel)]="nombre" >
+        <br>
+        <label>{{'dni_simple' | translate}}:</label>
+        <input class="form-control" placeholder="{{'enter_dni_simple' | translate}}" [(ngModel)]="dni" >
+        <br>
+        <label>{{'position' | translate}}:</label>
+        <select class="form-control" [(ngModel)]="carec">
+            <option [ngValue]=1>{{'encaregat' | translate}}</option>
+            <option [ngValue]=2>{{'responsable' | translate}}</option>
+            <option [ngValue]=3>{{'user' | translate}}</option>
+        </select>
+        <br>
+        <div align="center">
+            <button (click)="addTrabajador()" class="btn btn-secondary colorAdd"><i class="fa fa-plus"></i> {{ 'add' | translate }}</button>
+            <button (click)="cline()" class="btn btn-secondary colorCancel"><i class="fa fa-times"></i> {{ 'cline' | translate }}</button>
+        </div>
+        <div>
+            <p class="colorTextRed">{{errorTextUser}}</p>
+            <p class="colorTextGreen">{{succesUser}}</p>
+        </div>
+        <br>
+        <hr>
+        <h4>{{'asing_restaurants' | translate}}</h4>
+        <label>{{'user' | translate}}:</label>
+        <select class="form-control" [(ngModel)]="userActiu" (click)="getGestionats()">
+            <option *ngFor="let usuari of usuaris" [ngValue]=usuari>{{usuari.username}}</option>
+        </select>
+        <br>
+        <div *ngIf="userActiu !== null">
+            <label>{{'restaurant' | translate}}:</label>
+            <select class="form-control" [(ngModel)]="restaurantActiu" >
+                <option *ngFor="let restaurant of restaurants" [ngValue]=restaurant>{{restaurant.NIF}} - {{restaurant.nom}}</option>
+            </select>
+            <br>
+            <div align="center">
+                <button (click)="addNewGestionat()" class="btn btn-secondary colorAdd"><i class="fa fa-plus"></i> {{'add_gestio_restaurant' | translate}}</button>
+            </div>
+            <br>
+            <br>
+            <table class="table table-striped anchoFull">
+                <thead>
+                <tr>
+                    <th>{{'name_restaurant' | translate}}</th>
+                    <th>{{'dni' | translate}}</th>
+                    <th>{{'delete' | translate}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let getio of gestionats">
+                    <td>{{getio.nom}}</td>
+                    <td>{{getio.NIF}}</td>
+                    <td><button (click)="deleteGestionatResaturant(getio.id)" class="btn btn-secondary colorCancel"><i class="fa fa-times"></i> {{'delete' | translate}}</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <br>
+    </fieldset>
+</div>
+<div>
+    <p class="colorTextRed">{{errorText}}</p>
+    <p class="colorTextGreen">{{succes}}</p>
+</div>

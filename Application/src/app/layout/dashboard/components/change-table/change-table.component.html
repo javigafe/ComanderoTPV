@@ -1,0 +1,29 @@
+<div align="center" *ngIf="loading">
+    <br>
+    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+    <br>
+</div>
+<div *ngIf="!loading">
+    <div class="row">
+        <div class="col-sm-6">
+            <p>{{ 'initial_table' | translate }}</p>
+            <select class="form-control" [(ngModel)]="taula1">
+                <option *ngFor="let taula of taulesRestaurant1" [ngValue]="taula">{{taula.numTaula}}</option>
+            </select>
+        </div>
+        <div class="col-sm-6">
+            <p>{{ 'final_table' | translate }}</p>
+            <select class="form-control" [(ngModel)]="taula2">
+                <option *ngFor="let taula of taulesRestaurant2" [ngValue]="taula">{{taula.numTaula}}</option>
+            </select>
+        </div>
+    </div>
+    <br>
+    <div align="center">
+        <button (click)="doCambioMesa()" (click)="c('Close click')" class="btn btn-secondary colorAdd"><i class="fa fa-pencil"></i> {{ 'change' | translate }}</button>
+    </div>
+    <div>
+        <p class="colorTextRed">{{errorText}}</p>
+        <p class="colorTextGreen">{{succes}}</p>
+    </div>
+</div>

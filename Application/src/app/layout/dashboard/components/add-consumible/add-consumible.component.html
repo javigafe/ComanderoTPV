@@ -1,0 +1,42 @@
+<div>
+    <fieldset class="form-group">
+        <label>{{ 'name' | translate }}:</label>
+        <input class="form-control" placeholder="{{ 'enter_name' | translate }}" [(ngModel)]="nom" >
+        <br>
+        <label>{{ 'price' | translate }}:</label>
+        <div class="form-group input-group">
+            <span class="input-group-addon"><i class="fa fa-eur"></i></span>
+            <input class="form-control" placeholder="{{ 'enter_price' | translate }}" [(ngModel)]="preu" type="number">
+        </div>
+        <br>
+        <label>{{ 'description' | translate }}:</label>
+        <textarea class="form-control" rows="3" placeholder="{{ 'enter_description' | translate }}" [(ngModel)]="descripcio"></textarea>
+        <br>
+        <label>{{ 'iva' | translate }}:</label>
+        <div class="form-group input-group">
+            <span class="input-group-addon">%</span>
+            <input class="form-control" placeholder="{{ 'enter_iva' | translate }}" [(ngModel)]="iva" type="number">
+        </div>
+        <br>
+        <label>{{ 'picture' | translate }}: <em><small>{{ 'picture_text' | translate }}</small></em></label>
+        <input type="file" class="form-control-file" id="exampleInputFile" [(ngModel)]="foto">
+        <br>
+        <label>{{ 'categoria' | translate }}:</label>
+        <select class="form-control" [(ngModel)]="categoria">
+            <option [ngValue]=null></option>
+            <option *ngFor="let categoria of categorias" [ngValue]="categoria.id">{{categoria.nom}}</option>
+        </select>
+        <br>
+        <label class="checkbox-inline ">{{ 'elaborat' | translate }}: <input type="checkbox" [(ngModel)]="elaborat"></label>
+        <br>
+    </fieldset>
+    <div align="center">
+        <button (click)="addConsumible()" class="btn btn-secondary colorAdd"><i class="fa fa-plus"></i> {{ 'add' | translate }}</button>
+        <button (click)="cline()" class="btn btn-secondary colorCancel"><i class="fa fa-times"></i> {{ 'cline' | translate }}</button>
+    </div>
+</div>
+<br>
+<div>
+    <p class="colorTextRed">{{errorText}}</p>
+    <p class="colorTextGreen">{{succes}}</p>
+</div>

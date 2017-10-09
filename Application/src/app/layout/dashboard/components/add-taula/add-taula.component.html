@@ -1,0 +1,20 @@
+<fieldset class="form-group">
+    <label>{{ 'num_table' | translate }}:</label>
+    <input class="form-control" placeholder="{{ 'enter_num_table' | translate }}" [(ngModel)]="numTaula" type="number">
+    <br>
+    <label>{{ 'restau' | translate }}:</label>
+    <select class="form-control" [(ngModel)]="restaurant">
+        <option [ngValue]=null></option>
+        <option *ngFor="let restaurant of restaurants" [ngValue]="restaurant.id">{{restaurant.nom}}</option>
+    </select>
+    <br>
+</fieldset>
+<div align="center">
+    <button (click)="addTaula()" class="btn btn-secondary colorAdd"><i class="fa fa-plus"></i> {{ 'add' | translate }}</button>
+    <button (click)="cline()" class="btn btn-secondary colorCancel"><i class="fa fa-times"></i> {{ 'cline' | translate }}</button>
+</div>
+<br>
+<div>
+    <p class="colorTextRed">{{errorText}}</p>
+    <p class="colorTextGreen">{{succes}}</p>
+</div>

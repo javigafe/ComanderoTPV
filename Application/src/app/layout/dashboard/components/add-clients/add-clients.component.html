@@ -1,0 +1,22 @@
+<div>
+    <fieldset class="form-group">
+        <label>{{ 'name' | translate }}:</label>
+        <input class="form-control" placeholder="{{ 'enter_name' | translate }}" [(ngModel)]="nom" >
+        <br>
+        <label>{{ 'address' | translate }}:</label>
+        <input class="form-control" placeholder="{{ 'enter_address' | translate }}" [(ngModel)]="direccio">
+        <br>
+        <label>{{ 'dni' | translate }}:</label>
+        <input class="form-control" placeholder="{{ 'enter_dni' | translate }}" [(ngModel)]="dni_nif">
+        <br>
+    </fieldset>
+    <div align="center">
+        <button (click)="addClient()" class="btn btn-secondary colorAdd"><i class="fa fa-plus"></i> {{ 'add' | translate }}</button>
+        <button (click)="cline()" class="btn btn-secondary colorCancel"><i class="fa fa-times"></i> {{ 'cline' | translate }}</button>
+    </div>
+</div>
+<br>
+<div>
+    <p class="colorTextRed">{{errorText}}</p>
+    <p class="colorTextGreen">{{succes}}</p>
+</div>

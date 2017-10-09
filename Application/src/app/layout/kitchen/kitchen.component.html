@@ -1,0 +1,28 @@
+<h2 class="text-muted"><i class="fa fa-tasks"></i> Cuina</h2>
+<br>
+<div *ngIf="restaurantBuit" align="center">
+    <div class="card">
+        <div class="card-header colorWindowsRojo">
+            {{ 'error' | translate }}
+        </div>
+        <div class="card-block, textWindowsRojo">
+            <br>
+            <div class="warningColor">
+                <i class="fa fa-5x fa-exclamation-triangle"></i>
+            </div>
+            <br>
+            <p>
+                {{ 'no_restaurant_selected' | translate }}
+            </p>
+        </div>
+    </div>
+</div>
+<div *ngIf="!restaurantBuit">
+    <app-taulas-kitchen></app-taulas-kitchen>
+</div>
+<div align="center">
+    <hr />
+    <p>{{ 'footer' | translate }}</p>
+    <a href="https://github.com/javigafe"><i class="fa fa-github-alt"></i> {{ 'GitHub' | translate }}</a>
+</div>
+

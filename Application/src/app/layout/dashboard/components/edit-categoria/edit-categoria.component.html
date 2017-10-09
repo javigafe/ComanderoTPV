@@ -1,0 +1,67 @@
+<div>
+    <br>
+    <div class="form-group input-group">
+        <h4><i class="fa fa-search"></i> {{ 'filter' | translate }}:&nbsp;</h4>
+        <input class="form-control" placeholder="{{ 'filtering' | translate }}" [(ngModel)]="search" (keyup)="searchFun()">
+        <span class="input-group-btn"><button class="btn btn-secondary" type="button" (click)="clineSerarch()">{{ 'cline' | translate }}</button></span>
+    </div>
+    <hr />
+    <label>{{ 'select_categoria' | translate }}:</label>
+    <select class="form-control" [(ngModel)]="CategoriaEdita" (click)="getCategoriaEdit()">
+        <option [ngValue]=null></option>
+        <option *ngFor="let categoria of categorias" [ngValue]="categoria">{{categoria.nom}}</option>
+    </select>
+    <br>
+</div>
+<div *ngIf="(visible)">
+    <fieldset class="form-group">
+        <label>{{ 'name' | translate }}:</label>
+        <input class="form-control" placeholder="{{ 'enter_name' | translate }}" [(ngModel)]="nom" >
+        <br>
+        <label>{{ 'categoria_pare' | translate }}:</label>
+        <select class="form-control" [(ngModel)]="categoriaTemp">
+            <option [ngValue]=null></option>
+            <option *ngFor="let categoria of categoriasEdit" [ngValue]="categoria.id">{{categoria.nom}}</option>
+        </select>
+        <br>
+    </fieldset>
+    <div align="center">
+        <button (click)="editCategoria()" class="btn btn-secondary colorAdd"><i class="fa fa-pencil-square-o"></i> {{ 'edit' | translate }}</button>
+        <button (click)="open(content)" (click)="chekConsumibles()" class="btn btn-secondary colorCancel"><i class="fa fa-trash-o"></i> {{ 'delete' | translate }}</button>
+
+        <ng-template #content let-c="close" let-d="dismiss">
+            <div class="modal-header">
+                <div *ngIf="noBorrable">
+                    <h4 class="modal-title">{{ 'error_delete' | translate }}</h4>
+                </div>
+                <div *ngIf="!noBorrable">
+                    <h4 class="modal-title">{{ 'delete' | translate }}</h4>
+                </div>
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="!noBorrable">
+                    <p>{{ 'delete_text_categoria' | translate }}</p>
+                </div>
+                <div *ngIf="noBorrable">
+                    <p>{{ 'error_delete_text_categoria' | translate }}</p>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <div *ngIf="!noBorrable">
+                    <button (click)="delete()" (click)="c('Close click')" class="btn btn-secondary colorCancel"><i class="fa fa-trash-o"></i> {{ 'delete' | translate }}</button>
+                </div>
+                <button type="button" class="btn btn-secondary" (click)="c('Close click')">{{ 'cancel' | translate }}</button>
+            </div>
+        </ng-template>
+
+    </div>
+</div>
+<br>
+<div>
+    <p class="colorTextRed">{{errorText}}</p>
+    <p class="colorTextGreen">{{succes}}</p>
+</div>

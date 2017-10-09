@@ -1,0 +1,107 @@
+<br>
+<div align="center" *ngIf="loadingRestaurant || loadingTiquets || loadingConsumibles || loadingLines || loadingFiDia || loadingClose">
+    <br>
+    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+    <br>
+</div>
+<div class="row" *ngIf="(!loadingRestaurant) && (!loadingTiquets) && (!loadingConsumibles) && (!loadingLines) && (!loadingFiDia) && (!loadingClose) && (!fiFiDia)">
+    <!-- Part Central -->
+    <div class="col-md-9 col-sm-8" id="print-section">
+
+        <div align="center">
+            {{fechaTemp | date:'short' }}
+            <hr>
+        </div>
+
+        <table class="table table-striped anchoFull">
+            <thead>
+            <tr>
+                <th class="anchoQuantitat">{{ 'amount' | translate }}</th>
+                <th class="anchoFull">{{ 'product' | translate }}</th>
+                <th class="anchoQuantitat">{{ 'price' | translate }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let linea of lines">
+                <td>{{linea.quantitat}}</td>
+                <td>{{linea.nomConsumible}}</td>
+                <td align="right">{{((linea.preuActual * ((linea.ivaActual/100) + 1 )) * linea.quantitat).toFixed(2) }}</td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <hr>
+        <div class="totalPosition">
+            <br>
+            <div align="right">{{ 'total_taxes' | translate }}: {{totalImpostos.toFixed(2)}}€</div>
+            <div align="right"><b>{{ 'total' | translate }}: {{total.toFixed(2)}}€</b></div>
+            <br>
+        </div>
+        <hr>
+
+        <br>
+        <table class="table table-striped anchoFull">
+            <thead>
+            <tr align="right">
+                <th class="ancho25">{{ 'taxes' | translate }}</th>
+                <th class="ancho25">{{ 'base' | translate }}</th>
+                <th class="ancho25">{{ 'quota' | translate }}</th>
+                <th class="ancho25">{{ 'total' | translate }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let ivaLine of ivas" align="right">
+                <td>{{ivaLine.iva}}%</td>
+                <td>{{ivaLine.base.toFixed(2)}}€</td>
+                <td>{{ivaLine.cuota.toFixed(2)}}€</td>
+                <td>{{ivaLine.total.toFixed(2)}}€</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <br>
+        <hr>
+        <div align="center">
+            <p>{{ 'desglossi_pagament' | translate}}</p>
+        </div>
+        <hr>
+
+        <table class="table table-striped anchoFull">
+            <thead>
+            <tr align="right">
+                <th class="ancho25">{{ 'cash' | translate }}</th>
+                <th class="ancho25">{{ 'card' | translate }}</th>
+                <th class="ancho25">{{ 'ticket_restaurant' | translate }}</th>
+                <th class="ancho25">{{ 'others' | translate }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr align="right">
+                <td>{{totalEfectiu.toFixed(2)}}€</td>
+                <td>{{totalVisa.toFixed(2)}}€</td>
+                <td>{{totalTiquetsR.toFixed(2)}}€</td>
+                <td>{{totalAltres.toFixed(2)}}€</td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+
+    </div>
+    <!-- menu lateral -->
+    <div class="col-md-3 col-sm-4" >
+        <div align="center">
+            <button (click)="print()" class="btn btn-secondary anchoFull buttonMargin"><i class="fa fa-fw fa-print fa-5x"></i><br>{{ 'print_fi_dia' | translate }}</button>
+            <button (click)="closeFiDia()" class="btn btn-secondary anchoFull buttonMargin"><i class="fa fa-check fa-5x" aria-hidden="true"></i><br>{{ 'close' | translate }}</button>
+        </div>
+    </div>
+
+
+
+</div>
+
+<div *ngIf="fiFiDia" align="center">
+    <i class="fa fa-check fa-5x" aria-hidden="true"></i>
+    <br>
+    <p>{{ 'day_ok' | translate }}</p>
+    <br>
+</div>

@@ -1,0 +1,52 @@
+<div>
+    <label>{{ 'select_restaurant_taula' | translate }}:</label>
+    <select class="form-control" [(ngModel)]="restaurant" (click)="getTaulas()">
+        <option [ngValue]=null></option>
+        <option *ngFor="let restaurant of restaurants" [ngValue]="restaurant">{{restaurant.nom}}</option>
+    </select>
+</div>
+<br>
+<div *ngIf="taulasvisibles">
+    <label>{{ 'select_taula' | translate }}:</label>
+    <select class="form-control" [(ngModel)]="taula" (click)="getTaula()">
+        <option [ngValue]="null"></option>
+        <option *ngFor="let taula of taulas" [ngValue]="taula">{{taula.numTaula}}</option>
+    </select>
+    <br>
+</div>
+<div *ngIf="visible">
+    <fieldset class="form-group">
+        <label>{{ 'num_table' | translate }}:</label>
+        <input class="form-control" placeholder="{{ 'enter_num_table' | translate }}" [(ngModel)]="numTaula" type="number">
+        <br>
+        <label>{{ 'comensals' | translate }}:</label>
+        <input class="form-control" placeholder="{{ 'enter_comensals' | translate }}" [(ngModel)]="comensals" type="number">
+        <br>
+    </fieldset>
+    <div align="center">
+        <button (click)="editTaula()" class="btn btn-secondary colorAdd"><i class="fa fa-pencil-square-o"></i> {{ 'edit' | translate }}</button>
+        <button (click)="open(content)" class="btn btn-secondary colorCancel"><i class="fa fa-trash-o"></i> {{ 'delete' | translate }}</button>
+
+        <ng-template #content let-c="close" let-d="dismiss">
+            <div class="modal-header">
+                <h4 class="modal-title">{{ 'delete' | translate }}</h4>
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>{{ 'delete_text_taula' | translate }}</p>
+            </div>
+            <div class="modal-footer">
+                <button (click)="delete()" (click)="c('Close click')" class="btn btn-secondary colorCancel"><i class="fa fa-trash-o"></i> {{ 'delete' | translate }}</button>
+                <button type="button" class="btn btn-secondary" (click)="c('Close click')">{{ 'cancel' | translate }}</button>
+            </div>
+        </ng-template>
+
+    </div>
+</div>
+<br>
+<div>
+    <p class="colorTextRed">{{errorText}}</p>
+    <p class="colorTextGreen">{{succes}}</p>
+</div>

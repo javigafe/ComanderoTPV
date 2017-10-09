@@ -1,0 +1,166 @@
+<div>
+    <div  *ngIf="!loadingClients">
+        <div>
+            <p>
+                {{ 'text_invoice_filtres' | translate }}
+            </p>
+        </div>
+        <hr>
+
+        <div class="row">
+            <!-- numero tiquet -->
+            <div class="col-xl-6">
+                <div>
+                    <label>{{ 'num_invoice' | translate }}</label>
+                    <input [(ngModel)]="nTiquet" type="number" placeholder="{{ 'n_invoice' | translate }}" class="form-control">
+                </div>
+                <!-- data tiquet -->
+                <div align="center">
+                    <label>{{ 'date' | translate }}</label>
+                    <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd"
+                               name="dp" [(ngModel)]="fecha" ngbDatepicker  #d="ngbDatepicker">
+                        <div class="input-group-addon" (click)="d.toggle()" >
+                            <span class="fa fa-calendar"></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- hora tiquet -->
+                <div>
+                    <div class="row" align="center">
+                        <div class="ancho50">
+                            <label>{{ 'hour' | translate }}</label>
+                            <input [(ngModel)]="hora" type="number" placeholder="{{ 'hour' | translate }} 0 - 23" class="form-control">
+                        </div>
+                        <div class="ancho50">
+                            <label>{{ 'minutes' | translate }}</label>
+                            <input [(ngModel)]="minus" type="number" placeholder="{{ 'minutes' | translate }} 00 - 59" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- client -->
+            <div class="col-xl-6">
+                <br>
+                <div class="form-group input-group">
+                    <h4><i class="fa fa-search"></i> {{ 'search_client' | translate }}:&nbsp;</h4>
+                    <input class="form-control" placeholder="{{ 'client_dni_nif' | translate }}" [(ngModel)]="searchClient" (keyup)="searchFun()">
+                    <span class="input-group-btn"><button class="btn btn-secondary" type="button" (click)="clineSerarch()">{{ 'cline' | translate }}</button></span>
+                </div>
+                <hr>
+                <label>{{ 'select_client_invoice' | translate }}:</label>
+                <select class="form-control" [(ngModel)]="clientActiu">
+                    <option [ngValue]=null></option>
+                    <option *ngFor="let client of clients" [ngValue]="client">{{client.NIF_DNI}} - {{client.nom}}</option>
+                </select>
+                <div align="right" class="paddingTop">
+                    <button (click)="buscarTiquet()" class="btn btn-secondary anchoFull colorSearch"><i class="fa fa-search"></i> {{ 'search_invoices' | translate }}</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <hr>
+    <br>
+
+
+    <!-- tiquets -->
+    <div *ngIf="tiquets.length !== 0">
+        <label>{{ 'select_invoice' | translate }}:</label>
+        <select class="form-control" [(ngModel)]="tiquetActiu" (click)="getDataTiquet(tiquet)">
+            <option [ngValue]=null></option>
+            <option *ngFor="let tiquet of tiquets" [ngValue]="tiquet">{{tiquet.numeroTiquet}} - {{tiquet.dataHora}}</option>
+        </select>
+    </div>
+
+    <div align="center" *ngIf="((tiquets.length === 0) && (busquedas !== 0))">
+        <p class="textWarning">{{ 'no_get_invoice' | translate }}</p>
+    </div>
+
+    <!-- loading -->
+    <div align="center" *ngIf="loadingClients || loadingBusqueda || loadingConsumibles">
+        <br>
+        <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+        <br>
+    </div>
+
+    <br>
+    <!-- tiket view -->
+    <div *ngIf="((tiquetActiu !== null) && (!loadingConsumibles) && (loadingGetDataTiquet === 3))">
+        <br>
+        <hr>
+    </div>
+    <div class="row" *ngIf="tiquetActiu !== null">
+        <!-- Part Central -->
+        <div class="col-md-9 col-sm-8">
+            <div id="print-section">
+                <div align="center">
+                    {{fechaTiquet}}
+                    <hr>
+                </div>
+                <div *ngIf="clientActiuTiquet != null" align="center">
+                    <p>{{ 'client' | translate }}: {{clientActiuTiquet.nom}}<br>{{ 'address_client' | translate }}: {{clientActiuTiquet.direccio}}<br>{{ 'dni_client' | translate }}: {{clientActiuTiquet.NIF_DNI}}</p>
+                    <hr>
+                </div>
+                <table class="table table-striped anchoFull">
+                    <thead>
+                    <tr>
+                        <th class="anchoQuantitat">{{ 'amount' | translate }}</th>
+                        <th class="anchoFull">{{ 'product' | translate }}</th>
+                        <th class="anchoQuantitat">{{ 'price' | translate }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let lineaServer of lineasTiquet">
+                        <td>{{lineaServer.quantitat}}</td>
+                        <td>{{lineaServer.nomConsumible}}</td>
+                        <td align="right">{{((lineaServer.preuActual * ((lineaServer.ivaActual/100) + 1 )) * lineaServer.quantitat).toFixed(2) }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <hr>
+                <div class="totalPosition">
+                    <div align="right">{{ 'total_taxes' | translate }}: {{totalImpostos.toFixed(2)}}€</div>
+                    <div align="right"><b>{{ 'total' | translate }}: {{total.toFixed(2)}}€</b></div>
+                </div>
+                <hr>
+
+                <table class="table table-striped anchoFull">
+                    <thead>
+                    <tr align="right">
+                        <th class="ancho25">{{ 'taxes' | translate }}</th>
+                        <th class="ancho25">{{ 'base' | translate }}</th>
+                        <th class="ancho25">{{ 'quota' | translate }}</th>
+                        <th class="ancho25">{{ 'total' | translate }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let ivaLine of ivas" align="right">
+                        <td>{{ivaLine.iva}}%</td>
+                        <td>{{ivaLine.base.toFixed(2)}}€</td>
+                        <td>{{ivaLine.cuota.toFixed(2)}}€</td>
+                        <td>{{ivaLine.total.toFixed(2)}}€</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br>
+
+            </div>
+
+
+        </div>
+
+        <!-- menu lateral -->
+        <div class="col-md-3 col-sm-4" >
+            <div align="center">
+                <button (click)="print()" class="btn btn-secondary anchoFull buttonMargin"><i class="fa fa-fw fa-print fa-5x"></i><br>{{ 'print_invoice' | translate }}</button>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

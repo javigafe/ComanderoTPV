@@ -1,0 +1,47 @@
+<h2 class="text-muted"><i class="fa fa-fw fa-money"></i> {{ 'invoice' | translate }}</h2>
+<br>
+<div *ngIf="restaurantBuit" align="center">
+    <div class="card">
+        <div class="card-header colorWindowsRojo">
+            {{ 'error' | translate }}
+        </div>
+        <div class="card-block, textWindowsRojo">
+            <br>
+            <div class="warningColor">
+                <i class="fa fa-5x fa-exclamation-triangle"></i>
+            </div>
+            <br>
+            <p>
+                {{ 'no_restaurant_selected' | translate }}
+            </p>
+        </div>
+    </div>
+</div>
+<div *ngIf="!restaurantBuit">
+
+    <div *ngIf="menu == 0" align="center">
+        <button (click)="changeMenu(1)" class="btn btn-secondary"><i class="fa fa-fw fa-money fa-5x"></i><br>{{ 'gen_invoice' | translate }}</button>
+        <button (click)="changeMenu(2)" class="btn btn-secondary"><i class="fa fa-history fa-5x" aria-hidden="true"></i><br>{{ 'historical_invoices' | translate }}</button>
+    </div>
+
+    <div *ngIf="menu == 1">
+        <div align="right">
+            <button (click)="changeMenu(0)" class="btn btn-secondary"><i class="fa fa-chevron-left"></i> {{ 'back' | translate }}</button>
+        </div>
+        <app-generate-ticket></app-generate-ticket>
+    </div>
+
+    <div *ngIf="menu == 2">
+        <div align="right">
+            <button (click)="changeMenu(0)" class="btn btn-secondary"><i class="fa fa-chevron-left"></i> {{ 'back' | translate }}</button>
+        </div>
+        <app-show-tickets></app-show-tickets>
+    </div>
+
+</div>
+<div align="center">
+    <hr />
+    <p>{{ 'footer' | translate }}</p>
+    <a href="https://github.com/javigafe"><i class="fa fa-github-alt"></i> {{ 'GitHub' | translate }}</a>
+</div>
+

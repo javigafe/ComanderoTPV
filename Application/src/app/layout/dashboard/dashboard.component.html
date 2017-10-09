@@ -1,0 +1,270 @@
+<div *ngIf="hideNum == 0">
+    <h2 class="text-muted"><i class="fa fa-dashboard"></i> {{ 'dashboard' | translate }}</h2>
+    <br>
+    <div align="center" *ngIf="loading">
+        <br>
+        <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+        <br>
+    </div>
+    <div class="row" *ngIf="!loading">
+        <div *ngIf="!restaurantBuit && (cargo < 2)" class="col-xl-3 col-lg-6 separacion">
+            <div class="card">
+                <div class="card-header colorWindowsVerde">
+                    {{ 'fi_dias' | translate }}
+                </div>
+                <div class="card-block row">
+                    <div class="separacion anchoFull">
+                        <button (click)="changeHideNum(1)" class="btn btn-secondary card-block anchoFull"><i class="fa fa-file-o"></i> {{ 'do_fi_dias' | translate }}</button>
+                    </div>
+                    <div class="anchoFull">
+                        <button (click)="changeHideNum(2)" class="btn btn-secondary card-block anchoFull"><i class="fa fa-eye"></i> {{ 'see_fi_dias' | translate }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="cargo < 3" class="col-xl-3 col-lg-6 separacion">
+            <div class="card">
+                <div class="card-header colorWindowsAzul">
+                    {{ 'consumibles' | translate }}
+                </div>
+                <div class="card-block row">
+                    <div class="separacion anchoFull">
+                        <button (click)="changeHideNum(3)" class="btn btn-secondary card-block anchoFull"><i class="fa fa-plus"></i> {{ 'add_consumibles' | translate }}</button>
+                    </div>
+                    <div class="anchoFull">
+                        <button (click)="changeHideNum(4)" class="btn btn-secondary card-block anchoFull"><i class="fa fa-pencil"></i> {{ 'edit_consumibles' | translate }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="cargo < 3" class="col-xl-3 col-lg-6 separacion">
+            <div class="card">
+                <div class="card-header colorWindowsRojo">
+                    {{ 'categorias' | translate }}
+                </div>
+                <div class="card-block row">
+                    <div class="separacion anchoFull">
+                        <button (click)="changeHideNum(5)" class="btn btn-secondary card-block anchoFull"><i class="fa fa-plus"></i> {{ 'add_categorias' | translate }}</button>
+                    </div>
+                    <div class="anchoFull">
+                        <button (click)="changeHideNum(6)" class="btn btn-secondary card-block anchoFull"><i class="fa fa-pencil"></i> {{ 'edit_categorias' | translate }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 separacion">
+            <div class="card">
+                <div class="card-header colorWindowsAmarillo">
+                    {{ 'clients' | translate }}
+                </div>
+                <div class="card-block row">
+                    <div class="separacion anchoFull">
+                        <button (click)="changeHideNum(7)" class="btn btn-secondary card-block anchoFull"><i class="fa fa-plus"></i> {{ 'add_clients' | translate }}</button>
+                    </div>
+                    <div class="anchoFull">
+                        <button (click)="changeHideNum(8)" class="btn btn-secondary card-block anchoFull"><i class="fa fa-pencil"></i> {{ 'edit_clients' | translate }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="cargo < 2" class="col-xl-3 col-lg-6 separacion">
+            <div class="card">
+                <div class="card-header colorWindowsLila">
+                    {{ 'treballadors' | translate }}
+                </div>
+                <div class="card-block row">
+                    <div class="separacion anchoFull">
+                        <button (click)="changeHideNum(9)" class="btn btn-secondary card-block anchoFull"><i class="fa fa-plus"></i> {{ 'add_treballadors' | translate }}</button>
+                    </div>
+                    <div class="anchoFull">
+                        <button (click)="changeHideNum(10)" class="btn btn-secondary card-block anchoFull"><i class="fa fa-pencil"></i> {{ 'edit_treballadors' | translate }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="cargo < 2" class="col-xl-3 col-lg-6 separacion">
+            <div class="card">
+                <div class="card-header colores colorWindowsMarron">
+                    {{ 'restaurants' | translate }}
+                </div>
+                <div class="card-block row">
+                    <div class="separacion anchoFull">
+                        <button (click)="changeHideNum(11)" class="btn btn-secondary card-block anchoFull"><i class="fa fa-plus"></i> {{ 'add_restaurants' | translate }}</button>
+                    </div>
+                    <div class="anchoFull">
+                        <button (click)="changeHideNum(12)" class="btn btn-secondary card-block anchoFull"><i class="fa fa-pencil"></i> {{ 'edit_restaurants' | translate }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="cargo < 3" class="col-xl-3 col-lg-6 separacion">
+            <div class="card">
+                <div class="card-header colores colorWindowsGris">
+                    {{ 'taulas' | translate }}
+                </div>
+                <div class="card-block row">
+                    <div class="separacion anchoFull">
+                        <button (click)="changeHideNum(13)" class="btn btn-secondary card-block anchoFull"><i class="fa fa-plus"></i> {{ 'add_taulas' | translate }}</button>
+                    </div>
+                    <div class="anchoFull">
+                        <button (click)="changeHideNum(14)" class="btn btn-secondary card-block anchoFull"><i class="fa fa-pencil"></i> {{ 'edit_taulas' | translate }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="(!restaurantBuit) || (cargo < 2)" class="col-xl-3 col-lg-6 separacion">
+            <div class="card">
+                <div class="card-header colores colorWindowsMarronOrange">
+                    {{ 'altres' | translate }}
+                </div>
+                <div class="card-block row">
+                    <div class="separacion anchoFull">
+                        <button *ngIf="cargo < 2" (click)="changeHideNum(15)" class="btn btn-secondary card-block anchoFull"><i class="fa fa-flask"></i> {{ 'advanced_options' | translate }}</button>
+                    </div>
+                    <div class="anchoFull">
+                        <button *ngIf="!restaurantBuit" (click)="changeHideNum(16)" class="btn btn-secondary card-block anchoFull"><i class="fa fa-pencil"></i> {{ 'change_table' | translate }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="hideNum == 1">
+    <h2 class="text-muted">{{ 'do_fi_dias' | translate }}</h2>
+    <div align="right">
+        <button (click)="changeHideNum(0)" class="btn btn-secondary"><i class="fa fa-chevron-left"></i> {{ 'back' | translate }}</button>
+    </div>
+    <app-do-fi-dia>{{ 'loading' | translate }}</app-do-fi-dia>
+</div>
+<div *ngIf="hideNum == 2">
+    <h2 class="text-muted">{{ 'see_fi_dias' | translate }}</h2>
+    <div align="right">
+        <button (click)="changeHideNum(0)" class="btn btn-secondary"><i class="fa fa-chevron-left"></i> {{ 'back' | translate }}</button>
+    </div>
+    <app-check-fi-dia>{{ 'loading' | translate }}</app-check-fi-dia>
+</div>
+<div *ngIf="hideNum == 3">
+    <h2 class="text-muted">{{ 'add_consumibles' | translate }}</h2>
+    <div align="right">
+        <button (click)="changeHideNum(0)" class="btn btn-secondary"><i class="fa fa-chevron-left"></i> {{ 'back' | translate }}</button>
+    </div>
+    <app-add-consumible>{{ 'loading' | translate }}</app-add-consumible>
+</div>
+<div *ngIf="hideNum == 4">
+    <h2 class="text-muted">{{ 'edit_consumibles' | translate }}</h2>
+    <div align="right">
+        <button (click)="changeHideNum(0)" class="btn btn-secondary"><i class="fa fa-chevron-left"></i> {{ 'back' | translate }}</button>
+    </div>
+    <app-edit-consumible>{{ 'loading' | translate }}</app-edit-consumible>
+</div>
+<div *ngIf="hideNum == 5">
+    <h2 class="text-muted">{{ 'add_categorias' | translate }}</h2>
+    <div align="right">
+        <button (click)="changeHideNum(0)" class="btn btn-secondary"><i class="fa fa-chevron-left"></i> {{ 'back' | translate }}</button>
+    </div>
+    <app-add-categoria>{{ 'loading' | translate }}</app-add-categoria>
+</div >
+<div *ngIf="hideNum == 6">
+    <h2 class="text-muted">{{ 'edit_categorias' | translate }}</h2>
+    <div align="right">
+        <button (click)="changeHideNum(0)" class="btn btn-secondary"><i class="fa fa-chevron-left"></i> {{ 'back' | translate }}</button>
+    </div>
+    <app-edit-categoria>{{ 'loading' | translate }}</app-edit-categoria>
+</div>
+<div *ngIf="hideNum == 7">
+    <h2 class="text-muted">{{ 'add_clients' | translate }}</h2>
+    <div align="right">
+        <button (click)="changeHideNum(0)" class="btn btn-secondary"><i class="fa fa-chevron-left"></i> {{ 'back' | translate }}</button>
+    </div>
+    <app-add-clients>{{ 'loading' | translate }}</app-add-clients>
+</div>
+<div *ngIf="hideNum == 8">
+    <h2 class="text-muted">{{ 'edit_clients' | translate }}</h2>
+    <div align="right">
+        <button (click)="changeHideNum(0)" class="btn btn-secondary"><i class="fa fa-chevron-left"></i> {{ 'back' | translate }}</button>
+    </div>
+    <app-edit-clients>{{ 'loading' | translate }}</app-edit-clients>
+</div>
+<div *ngIf="hideNum == 9">
+    <h2 class="text-muted">{{ 'add_treballadors' | translate }}</h2>
+    <div align="right">
+        <button (click)="changeHideNum(0)" class="btn btn-secondary"><i class="fa fa-chevron-left"></i> {{ 'back' | translate }}</button>
+    </div>
+    <app-add-trabajador>{{ 'loading' | translate }}</app-add-trabajador>
+</div>
+<div *ngIf="hideNum == 10">
+    <h2 class="text-muted">{{ 'edit_treballadors' | translate }}</h2>
+    <div align="right">
+        <button (click)="changeHideNum(0)" class="btn btn-secondary"><i class="fa fa-chevron-left"></i> {{ 'back' | translate }}</button>
+    </div>
+    <app-edit-trabajador>{{ 'loading' | translate }}</app-edit-trabajador>
+</div>
+<div *ngIf="hideNum == 11">
+    <h2 class="text-muted">{{ 'add_restaurants' | translate }}</h2>
+    <div align="right">
+        <button (click)="changeHideNum(0)" class="btn btn-secondary"><i class="fa fa-chevron-left"></i> {{ 'back' | translate }}</button>
+    </div>
+    <app-add-restaurant>{{ 'loading' | translate }}</app-add-restaurant>
+</div>
+<div *ngIf="hideNum == 12">
+    <h2 class="text-muted">{{ 'edit_restaurants' | translate }}</h2>
+    <div align="right">
+        <button (click)="changeHideNum(0)" class="btn btn-secondary"><i class="fa fa-chevron-left"></i> {{ 'back' | translate }}</button>
+    </div>
+    <app-edit-restaurant>{{ 'loading' | translate }}</app-edit-restaurant>
+</div>
+<div *ngIf="hideNum == 13">
+    <h2 class="text-muted">{{ 'add_taulas' | translate }}</h2>
+    <div align="right">
+        <button (click)="changeHideNum(0)" class="btn btn-secondary"><i class="fa fa-chevron-left"></i> {{ 'back' | translate }}</button>
+    </div>
+    <app-add-taula>{{ 'loading' | translate }}</app-add-taula>
+</div>
+<div *ngIf="hideNum == 14">
+    <h2 class="text-muted">{{ 'edit_taulas' | translate }}</h2>
+    <div align="right">
+        <button (click)="changeHideNum(0)" class="btn btn-secondary"><i class="fa fa-chevron-left"></i> {{ 'back' | translate }}</button>
+    </div>
+    <app-edit-taula>{{ 'loading' | translate }}</app-edit-taula>
+</div>
+<div *ngIf="hideNum == 15">
+    <div align="right">
+        <button (click)="changeHideNum(0)" class="btn btn-secondary"><i class="fa fa-chevron-left"></i> {{ 'back' | translate }}</button>
+    </div>
+    <br>
+    <div align="center">
+        <div class="card">
+            <div class="card-header colorWindowsRojo">
+                {{ 'warning' | translate }}
+            </div>
+            <div class="card-block, textWindowsRojo">
+                <br>
+                <div class="warningColor">
+                    <i class="fa fa-5x fa-exclamation-triangle"></i>
+                </div>
+                <br>
+                <p>
+                    {{ 'dont_touch' | translate }}
+                </p>
+                <a class="btn btn-secondary card-block anchoFull" href="{{adbancedURL}}"><i class="fa fa-exclamation-triangle"></i> {{ 'access' | translate }}</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="hideNum == 16">
+    <h2 class="text-muted">{{ 'change_table' | translate }}</h2>
+    <div align="right">
+        <button (click)="changeHideNum(0)" class="btn btn-secondary"><i class="fa fa-chevron-left"></i> {{ 'back' | translate }}</button>
+    </div>
+    <app-change-table>{{ 'loading' | translate }}</app-change-table>
+</div>
+<div align="center">
+    <hr />
+    <p>{{ 'footer' | translate }}</p>
+    <a href="https://github.com/javigafe"><i class="fa fa-github-alt"></i> {{ 'GitHub' | translate }}</a>
+</div>
+
+
+

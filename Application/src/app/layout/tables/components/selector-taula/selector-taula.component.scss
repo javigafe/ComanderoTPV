@@ -1,0 +1,89 @@
+.colorWindowsGris{
+    background-color: #B0BEC5;
+}
+
+.colorWindowsRojo{
+    background-color: #EF9A9A;
+}
+
+.colorWindowsAzul{
+    background-color: #80DEEA;
+}
+
+.colorCancel{
+    background-color: #ff5b77;
+    color: #FFFFFF;
+}
+
+.colorAdd{
+    background-color: #00b3ee;
+    color: #FFFFFF;
+}
+
+.colorTramitar{
+    background-color: #5cb85c;
+    color: #FFFFFF;
+}
+
+.cardIMG {
+    max-width: 100%;
+    height: auto;
+}
+
+corteIMG {
+    width: 280px;
+    height: 280px;
+    object-fit: none;
+}
+
+.cardAltura{
+    height: 90%;
+}
+
+.esquina{
+    height: 0px;
+    position: relative;
+}
+
+.paddingO{
+    padding: 0px;
+    padding-left: 2px;
+    padding-bottom: 20px;
+}
+
+.noneall{
+    border: 0px;
+    background-color: inherit;
+}
+
+.padding3{
+    padding: 3px;
+}
+
+.alingVertical {
+    top: 22%;
+}
+
+.zindex1{
+    z-index: 1;
+}
+
+.zindex2{
+    z-index: 2;
+}
+
+.butonsLine {
+    position: absolute;
+    float: right;
+    top: 50%;
+    left: 91%;
+    transform: translate(-50%, -50%)
+}
+
+.textLine {
+    position: absolute;
+}
+
+.trasparente {
+    color: transparent;
+}

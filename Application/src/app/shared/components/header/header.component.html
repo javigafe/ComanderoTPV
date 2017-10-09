@@ -1,0 +1,54 @@
+<div class="pos-f-t fixed-top header">
+    <nav class="navbar navbar-inverse bg-inverse navbar-toggleable-md">
+        <button class="navbar-toggler navbar-toggler-right" (click)="toggleSidebar()">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="javascript:void(0)">ComanderoTPV</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto mt-2 mt-md-0">
+                <li class="nav-item dropdown" ngbDropdown>
+                    <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
+                        <i class="fa fa-language"></i> {{ 'language' | translate }} <b class="caret"></b>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('en')">{{ 'english' | translate }}</a>
+                        <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('es')">{{ 'spanish' | translate }}</a>
+                        <a class="dropdown-item" href="javascript:void(0)" (click)="changeLang('cat')">{{ 'catalan' | translate }}</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown" ngbDropdown>
+                    <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle (click)="getNomRestaurante()" (click)="getRestaurantUsuari()">
+                        <i class="fa fa-cutlery"></i> {{nomRestaurant}} <b class="caret"></b>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="javascript:void(0)" (click)="open(content)">{{ 'change_restaurant' | translate }}</a>
+
+                        <ng-template #content let-c="close" let-d="dismiss">
+                            <div class="modal-header">
+                                <h4 class="modal-title">{{ 'select_restaurant_menu' | translate }}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <label>{{ 'select_restaurant_work' | translate }}:</label>
+                                <select class="form-control" [(ngModel)]="RestaurantActiu">
+                                    <option *ngFor="let restaurante of restaurants" [ngValue]="restaurante">{{restaurante.nom}}</option>
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button (click)="selecioRestaurant()" (click)="c('Close click')" class="btn btn-secondary">{{ 'select' | translate }}</button>
+                            </div>
+                        </ng-template>
+
+                    </div>
+                </li>
+                <li class="nav-item dropdown" ngbDropdown>
+                    <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
+                        <i class="fa fa-user"></i> {{usuario}} <b class="caret"></b>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" [routerLink]="['/login']" (click)="onLoggedout()"><i class="fa fa-fw fa-power-off"></i> {{ 'log_out' | translate }}</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>

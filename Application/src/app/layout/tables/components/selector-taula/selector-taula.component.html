@@ -1,0 +1,245 @@
+<!-- loading -->
+<div align="center" *ngIf="loadingTaulas || loading">
+    <br>
+    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+    <br>
+</div>
+<!-- seleco Taula -->
+<div *ngIf="(!taulaSelecionada) && (!loadingTaulas)">
+    <div>
+        <p>{{ 'select_table_comand' | translate }}</p>
+    </div>
+    <div class="row">
+        <div class="col-6 col-sm-3 col-md-2 text-xs-center" *ngFor="let taula of taulesRestaurant">
+            <div class="card card-default colorWindowsGris" (click)="seleccioTaula(taula, content)">
+                <div class="card-block" align="center">
+                    {{taula.numTaula}}
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+<div *ngIf="(taulaSelecionada) && (!loadingComanda)" class="row">
+
+    <!--   Seleccio consumibles -->
+
+    <div class="col-md-9 col-sm-8">
+
+        <div align="right">
+            <button (click)="clineTaula()" class="btn btn-secondary"><i class="fa fa-chevron-left"></i> {{ 'select_other_table' | translate }}</button>
+        </div>
+        <br>
+        <div>
+            <div class="form-group input-group">
+                <h4><i class="fa fa-search"></i> {{ 'search' | translate }}:&nbsp;</h4>
+                <input class="form-control" placeholder="{{ 'search_consumible' | translate }}" [(ngModel)]="search" (keyup)="searchFun()">
+                <span class="input-group-btn"><button class="btn btn-secondary" type="button" (click)="clineSerarch()">{{ 'cline' | translate }}</button></span>
+            </div>
+            <hr />
+        </div>
+        <div *ngIf="!buscando">
+            <h3>{{ 'categoria' | translate }}: {{categoria}}</h3>
+            <br>
+            <div class="row">
+                <div class="col-6 col-sm-3 col-md-2 text-xs-center" *ngFor="let categoria of categoriasMostra">
+                    <div *ngIf="categoria == null">
+                        <div class="card card-default colorWindowsRojo" (click)="seleccioCategoria(categoria)">
+                            <div class="card-block" align="center">
+                                ...
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="categoria != null">
+                        <div class="card card-default colorWindowsRojo" (click)="seleccioCategoria(categoria)">
+                            <div class="card-block" align="center">
+                                {{categoria.nom}}
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="row">
+                <div class="col-6 col-sm-3 col-md-2 text-xs-center" *ngFor="let consumible of consumiblesMostra">
+                    <div align="left" class="esquina zindex2">
+                        <button (click)="modalInfo(infoConsumible, consumible)" class="noneall"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="card card-default colorWindowsAzul cardAltura zindex1" (click)="addConsumible(consumible)">
+                        <div class="card-block, paddingO" align="center">
+                            <div *ngIf="consumible.foto != null">
+                                <img src="{{consumible.foto}}" class="corteIMG cardIMG" alt="">
+                            </div>
+                            <div>
+                                <br>
+                                {{consumible.nom}}
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <br>
+
+    <!--   Lista lateral -->
+
+    <div class="col-md-3 col-sm-4" >
+
+        <h4>{{ 'table' | translate }}: {{taula.numTaula}}</h4>
+        <div class="container">
+            <!--lista server -->
+            <div *ngIf="listaConsumiblesServer.length !== 0">
+                <div class="card card-default">
+                    <ul class="list-group list-group-flush" *ngFor="let lineaServer of listaConsumiblesServer">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-10 alingVertical textLine" align="left">
+                                    <p>{{lineaServer.quantitat}}x {{lineaServer.nomConsumible}}</p>
+                                </div>
+                                <div class="col-2 butonsLine" align="right">
+                                    <div class="text-xs-center">
+                                        <button type="button" class="btn btn-secondary padding3" (click)=" moreQuantitatServer(lineaServer)"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                    </div>
+                                    <div class="text-xs-center">
+                                        <button type="button" class="btn btn-secondary padding3" (click)="lessQuantitatServer(lineaServer)"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                                <div class="col-10 trasparente alingVertical" align="left">
+                                    <p>{{lineaServer.quantitat}}x {{lineaServer.nomConsumible}}</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <br>
+            </div>
+
+            <!-- lista Local -->
+            <div *ngIf="listaConsumiblesPendets.length !== 0">
+                <div class="card card-default">
+                    <ul class="list-group list-group-flush" *ngFor="let linea of listaConsumiblesPendets">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-10 alingVertical textLine" align="left">
+                                    <p class="card-text">{{linea.quantitat}}x {{linea.nomConsumible}}</p>
+                                </div>
+                                <div class="col-2 butonsLine" align="right">
+                                    <div class="text-xs-center">
+                                        <button type="button" class="btn btn-secondary padding3" (click)="moreQuantitat(linea)"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                    </div>
+                                    <div class="text-xs-center">
+                                        <button type="button" class="btn btn-secondary padding3" (click)="lessQuantitat(linea)"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                                <div class="col-10 trasparente alingVertical" align="left">
+                                    <p>{{linea.quantitat}}x {{linea.nomConsumible}}</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="card-block text-center colorTramitar" *ngIf="listaConsumiblesPendets.length != 0" (click)="tramitarPendents()">
+                        <b>{{ 'tramitar' | translate }}</b>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div align="center">
+                <h5>{{ 'total' | translate }}</h5>
+                <div class="card-block card card-default" align="center">
+                    {{totalLista}} €
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- moddals -->
+
+<div>
+
+    <!-- modal comensals and loading -->
+
+    <ng-template #content let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <div *ngIf="loading">
+                <h4 class="modal-title">{{ 'processing' | translate }}</h4>
+            </div>
+            <div *ngIf="!loading">
+                <h4 class="modal-title">{{ 'num_diners' | translate }}</h4>
+            </div>
+            <div *ngIf="!loading">
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        <div *ngIf="loading" align="center">
+            <br>
+            <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+            <br>
+            <br>
+        </div>
+        <div *ngIf="!loading">
+            <div class="modal-body">
+                <label>{{ 'set_num_diners' | translate }}</label>
+                <input class="form-control" placeholder="{{ 'num_diners' | translate }}" [(ngModel)]="comensals" type="number">
+            </div>
+            <div class="modal-footer">
+                <button (click)="activarTaula(comensals)" class="btn btn-secondary colorAdd">{{ 'accept' | translate }}</button>
+                <button type="button" class="btn btn-secondary colorCancel" (click)="c('Close click')">{{ 'cancel' | translate }}</button>
+            </div>
+        </div>
+    </ng-template>
+
+    <!-- modal info consumible -->
+
+    <ng-template #infoConsumible let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h4 class="modal-title">{{infoConsumibleData.nom}}</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div>
+                <div *ngIf="infoConsumibleData.foto != null" class="row">
+                    <div class="col-sm-3" align="center">
+                        <img src="{{infoConsumibleData.foto}}" alt="" class="cardIMG">
+                        <br>
+                    </div>
+                    <div class="col-sm-9">
+                        <p><b>{{ 'name' | translate }}:</b> {{infoConsumibleData.nom}}</p>
+                        <p><b>{{ 'without_iva' | translate }}:</b> {{infoConsumibleData.preu}} €</p>
+                        <p><b>{{ 'with_iva' | translate }}:</b> {{( (infoConsumibleData.preu) * ( (infoConsumibleData.iva / 100) + 1) )}} €</p>
+                        <p><b>{{ 'iva' | translate }}:</b> {{infoConsumibleData.iva}} %</p>
+                        <p><b>{{ 'requires_preparation' | translate }}:</b> <i *ngIf="infoConsumibleData.elaborat">{{ 'yes' | translate }}</i><i *ngIf="!infoConsumibleData.elaborat">{{ 'no' | translate }}</i></p>
+                        <p><b>{{ 'description' | translate }}:</b></p>
+                        <textarea class="form-control" rows="4" [(ngModel)]="infoConsumibleData.descripcio"></textarea>
+                    </div>
+                </div>
+                <div *ngIf="infoConsumibleData.foto == null">
+                    <div>
+                        <p><b>{{ 'name' | translate }}:</b> {{infoConsumibleData.nom}}</p>
+                        <p><b>{{ 'without_iva' | translate }}:</b> {{infoConsumibleData.preu}} €</p>
+                        <p><b>{{ 'with_iva' | translate }}:</b> {{( (infoConsumibleData.preu) * ( (infoConsumibleData.iva / 100) + 1) )}} €</p>
+                        <p><b>{{ 'iva' | translate }}:</b> {{infoConsumibleData.iva}} %</p>
+                        <p><b>{{ 'requires_preparation' | translate }}:</b> <i *ngIf="infoConsumibleData.elaborat">{{ 'yes' | translate }}</i><i *ngIf="!infoConsumibleData.elaborat">{{ 'no' | translate }}</i></p>
+                        <p><b>{{ 'description' | translate }}:</b></p>
+                        <textarea class="form-control" rows="4" [(ngModel)]="infoConsumibleData.descripcio"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="c('Close click')">Tancar</button>
+        </div>
+    </ng-template>
+
+</div>

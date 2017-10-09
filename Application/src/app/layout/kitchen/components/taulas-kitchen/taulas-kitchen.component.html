@@ -1,0 +1,37 @@
+<div>
+    <p>{{ 'remember_that' | translate }}: <b class="textColorRojo">{{ 'no_elaborat' | translate }}</b>, <b class="textColorAmarillo">{{ 'elaborant' | translate }}</b>, <b class="textColorVerde">{{ 'finalized' | translate }}</b>
+</div>
+<div align="right">
+    <button class="btn btn-secondary" (click)="getComandesCuina()"><i class="fa fa-refresh"></i> {{ 'update' | translate }}</button>
+</div>
+
+<br>
+
+<div *ngIf="loading" align="center">
+    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+</div>
+
+<div *ngIf="(talasCuina.length == 0) && (!loading)">
+    <p class="textColorRed">{{ 'no_comans_tables' | translate }}</p>
+</div>
+
+<div class="container-fluid h-scrollable" *ngIf="(talasCuina.length != 0) && (!loading)">
+
+    <div class="col-xl-3 col-lg-6 separacion element-scrollable" *ngFor="let tualaCuina of talasCuina">
+        <div class="card">
+            <div class="card-header">
+                {{ 'table' | translate }} {{tualaCuina.numTaula}}
+            </div>
+            <div class="card-block row">
+                <div class="separacion anchoFull" *ngFor="let lineaTaula of tualaCuina.lineasTiket">
+                    <button class="btn btn-secondary card-block anchoFull colorWindowsRojo" *ngIf="lineaTaula.elaboracio == 2" (click)="porcesElebaoracio(tualaCuina, lineaTaula)" >{{lineaTaula.quantitat}}x {{lineaTaula.nomConsumible}}</button>
+                    <button class="btn btn-secondary card-block anchoFull colorWindowsAmarillo" *ngIf="lineaTaula.elaboracio == 3" (click)="porcesElebaoracio(tualaCuina, lineaTaula)" >{{lineaTaula.quantitat}}x {{lineaTaula.nomConsumible}}</button>
+                    <button class="btn btn-secondary card-block anchoFull colorWindowsVerde" *ngIf="lineaTaula.elaboracio == 4" (click)="porcesElebaoracio(tualaCuina, lineaTaula)" >{{lineaTaula.quantitat}}x {{lineaTaula.nomConsumible}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<br>
+

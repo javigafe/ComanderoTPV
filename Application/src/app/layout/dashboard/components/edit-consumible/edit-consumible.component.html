@@ -1,0 +1,76 @@
+<div>
+    <div>
+        <br>
+        <div class="form-group input-group">
+            <h4><i class="fa fa-search"></i> {{ 'filter' | translate }}:&nbsp;</h4>
+            <input class="form-control" placeholder="{{ 'filtering' | translate }}" [(ngModel)]="search" (keyup)="searchFun()">
+            <span class="input-group-btn"><button class="btn btn-secondary" type="button" (click)="clineSerarch()">{{ 'cline' | translate }}</button></span>
+        </div>
+        <hr />
+        <label>{{ 'select_consumible' | translate }}:</label>
+        <select class="form-control" [(ngModel)]="consumible" (click)="getConsumible()">
+            <option [ngValue]="null"></option>
+            <option *ngFor="let consumible of consumibles" [ngValue]="consumible">{{consumible.nom}}</option>
+        </select>
+        <br>
+    </div>
+    <div *ngIf="visible">
+        <fieldset class="form-group">
+            <label>{{ 'name' | translate }}:</label>
+            <input class="form-control" placeholder="{{ 'enter_name' | translate }}" [(ngModel)]="nom" >
+            <br>
+            <label>{{ 'price' | translate }}:</label>
+            <div class="form-group input-group">
+                <span class="input-group-addon"><i class="fa fa-eur"></i></span>
+                <input class="form-control" placeholder="{{ 'enter_price' | translate }}" [(ngModel)]="preu" type="number">
+            </div>
+            <br>
+            <label>{{ 'description' | translate }}:</label>
+            <textarea class="form-control" rows="3" placeholder="{{ 'enter_description' | translate }}" [(ngModel)]="descripcio"></textarea>
+            <br>
+            <label>{{ 'iva' | translate }}:</label>
+            <div class="form-group input-group">
+                <span class="input-group-addon">%</span>
+                <input class="form-control" placeholder="{{ 'enter_iva' | translate }}" [(ngModel)]="iva" type="number">
+            </div>
+            <br>
+            <label>{{ 'picture' | translate }}: <em><small>{{ 'picture_text' | translate }}</small></em></label>
+            <input type="file" class="form-control-file" id="exampleInputFile" [(ngModel)]="foto">
+            <br>
+            <label>{{ 'categoria' | translate }}:</label>
+            <select class="form-control" [(ngModel)]="categoria">
+                <option [ngValue]=null></option>
+                <option *ngFor="let categoria of categorias" [ngValue]="categoria.id">{{categoria.nom}}</option>
+            </select>
+            <br>
+            <label class="checkbox-inline ">{{ 'elaborat' | translate }}: <input type="checkbox" [(ngModel)]="elaborat"></label>
+            <br>
+        </fieldset>
+        <div align="center">
+            <button (click)="editConsumible()" class="btn btn-secondary colorAdd"><i class="fa fa-pencil-square-o"></i> {{ 'edit' | translate }}</button>
+            <button (click)="open(content)" class="btn btn-secondary colorCancel"><i class="fa fa-trash-o"></i> {{ 'delete' | translate }}</button>
+
+            <ng-template #content let-c="close" let-d="dismiss">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ 'delete' | translate }}</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>{{ 'delete_text_consumible' | translate }}</p>
+                </div>
+                <div class="modal-footer">
+                    <button (click)="delete()" (click)="c('Close click')" class="btn btn-secondary colorCancel"><i class="fa fa-trash-o"></i> {{ 'delete' | translate }}</button>
+                    <button type="button" class="btn btn-secondary" (click)="c('Close click')">{{ 'cancel' | translate }}</button>
+                </div>
+            </ng-template>
+
+        </div>
+    </div>
+</div>
+<br>
+<div>
+    <p class="colorTextRed">{{errorText}}</p>
+    <p class="colorTextGreen">{{succes}}</p>
+</div>
